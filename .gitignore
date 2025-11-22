@@ -1,0 +1,17 @@
+# Backend dependencies
+backend/node_modules/
+
+# Frontend dependencies
+frontend/node_modules/
+
+# Env files
+backend/.env
+frontend/.env
+
+# Build / cache
+frontend/build/
+backend/.cache/
+frontend/.cache/
+
+# System files
+.DS_Store

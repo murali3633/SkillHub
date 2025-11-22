@@ -1,0 +1,240 @@
+/* Modern Loading Spinner Styles - Universal Centering */
+.skillhub-loading-container {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 1rem !important;
+  padding: 2rem !important;
+  text-align: center !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  box-sizing: border-box !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  margin: 0 !important;
+  background: rgba(255, 255, 255, 0.98) !important;
+  z-index: 9999 !important;
+}
+
+.skillhub-loading-container.skillhub-overlay {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(10px) !important;
+  z-index: 9998 !important;
+  padding: 2rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  box-sizing: border-box !important;
+}
+
+.modern-spinner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.spinner-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-top: 3px solid;
+  animation: spin 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+}
+
+.spinner-ring:nth-child(1) {
+  border-top-color: #667eea;
+  animation-delay: 0s;
+}
+
+.spinner-ring:nth-child(2) {
+  border-top-color: #667eea;
+  animation-delay: 0.2s;
+}
+
+.spinner-ring:nth-child(3) {
+  border-top-color: #f093fb;
+  animation-delay: 0.4s;
+}
+
+/* Size variants */
+.spinner-small .spinner-ring {
+  width: 20px;
+  height: 20px;
+  border-width: 2px;
+}
+
+.spinner-medium .spinner-ring {
+  width: 40px;
+  height: 40px;
+  border-width: 3px;
+}
+
+.spinner-large .spinner-ring {
+  width: 60px;
+  height: 60px;
+  border-width: 4px;
+}
+
+/* Ring positioning for layered effect */
+.spinner-small .spinner-ring:nth-child(2) {
+  transform: scale(0.8);
+}
+
+.spinner-small .spinner-ring:nth-child(3) {
+  transform: scale(0.6);
+}
+
+.spinner-medium .spinner-ring:nth-child(2) {
+  transform: scale(0.85);
+}
+
+.spinner-medium .spinner-ring:nth-child(3) {
+  transform: scale(0.7);
+}
+
+.spinner-large .spinner-ring:nth-child(2) {
+  transform: scale(0.9);
+}
+
+.spinner-large .spinner-ring:nth-child(3) {
+  transform: scale(0.8);
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Loading message styles - Universal Centering */
+.skillhub-loading-message {
+  color: #4a5568 !important;
+  font-weight: 500 !important;
+  text-align: center !important;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  display: block !important;
+  margin: 0 auto !important;
+  width: 100% !important;
+  max-width: 400px !important;
+  box-sizing: border-box !important;
+  position: relative !important;
+}
+
+.message-small {
+  font-size: 0.8rem;
+}
+
+.message-medium {
+  font-size: 1rem;
+}
+
+.message-large {
+  font-size: 1.2rem;
+}
+
+/* Pulse animation for overlay */
+.skillhub-loading-container.skillhub-overlay .skillhub-loading-message {
+  animation: pulse 2s infinite !important;
+  text-align: center !important;
+  margin-top: 1rem !important;
+  width: 100% !important;
+  display: block !important;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* Universal centering for all devices */
+.skillhub-loading-container * {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  text-align: center !important;
+}
+
+/* Force absolute centering */
+.skillhub-loading-container {
+  transform: translate(0, 0) !important;
+}
+
+.skillhub-loading-container > .modern-spinner {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  margin: 0 !important;
+}
+
+.skillhub-loading-container > .skillhub-loading-message {
+  position: absolute !important;
+  top: 60% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  margin: 0 !important;
+  width: 300px !important;
+}
+
+/* Mobile responsive font sizes */
+@media screen and (max-width: 768px) {
+  .message-large {
+    font-size: 1.1rem;
+  }
+  
+  .message-medium {
+    font-size: 0.95rem;
+  }
+  
+  .message-small {
+    font-size: 0.8rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .spinner-large .spinner-ring {
+    width: 50px;
+    height: 50px;
+    border-width: 3px;
+  }
+  
+  .spinner-medium .spinner-ring {
+    width: 35px;
+    height: 35px;
+    border-width: 2px;
+  }
+  
+  .message-large {
+    font-size: 1rem;
+  }
+  
+  .message-medium {
+    font-size: 0.9rem;
+  }
+  
+  .message-small {
+    font-size: 0.75rem;
+  }
+}
+

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Frontend-Backend Connection Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .test-result { margin: 20px 0; padding: 15px; border-radius: 5px; }
+        .success { background-color: #d4edda; border: 1px solid #c3e6cb; color: #155724; }
+        .error { background-color: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; }
+        .pending { background-color: #fff3cd; border: 1px solid #ffeaa7; color: #856404; }
+        button { padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        button:disabled { background-color: #6c757d; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+    <h1>Frontend-Backend Connection Test</h1>
+    
+    <button id="runTest">Run Connection Test</button>
+    
+    <div id="results"></div>
+
+    <script>
+        document.getElementById('runTest').addEventListener('click', runTests);
+        
+        async function runTests() {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '';
+            
+            // Test 1: Courses API
+            const coursesTest = document.createElement('div');
+            coursesTest.className = 'test-result pending';
+            coursesTest.innerHTML = '<h3>_courses API Test</h3><p>Testing...</p>';
+            resultsDiv.appendChild(coursesTest);
+            
+            try {
+                const coursesResponse = await fetch('http://localhost:5000/api/courses');
+                const coursesData = await coursesResponse.json();
+                
+                if (coursesResponse.ok) {
+                    coursesTest.className = 'test-result success';
+                    coursesTest.innerHTML = `
+                        <h3>✅ Courses API Test</h3>
+                        <p>Status: Success</p>
+                        <p>Courses Found: ${coursesData.length}</p>
+                        ${coursesData.length > 0 ? `<p>First Course: ${coursesData[0].title}</p>` : ''}
+                    `;
+                } else {
+                    coursesTest.className = 'test-result error';
+                    coursesTest.innerHTML = `
+                        <h3>❌ Courses API Test</h3>
+                        <p>Status: Failed</p>
+                        <p>Error: ${coursesData.message || 'Unknown error'}</p>
+                    `;
+                }
+            } catch (error) {
+                coursesTest.className = 'test-result error';
+                coursesTest.innerHTML = `
+                    <h3>❌ Courses API Test</h3>
+                    <p>Status: Failed</p>
+                    <p>Error: ${error.message}</p>
+                `;
+            }
+            
+            // Test 2: Login API
+            const loginTest = document.createElement('div');
+            loginTest.className = 'test-result pending';
+            loginTest.innerHTML = '<h3>Login API Test</h3><p>Testing...</p>';
+            resultsDiv.appendChild(loginTest);
+            
+            try {
+                const loginResponse = await fetch('http://localhost:5000/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: 'student@example.com',
+                        password: 'password123'
+                    })
+                });
+                const loginData = await loginResponse.json();
+                
+                if (loginResponse.ok && loginData.success) {
+                    loginTest.className = 'test-result success';
+                    loginTest.innerHTML = `
+                        <h3>✅ Login API Test</h3>
+                        <p>Status: Success</p>
+                        <p>User: ${loginData.user.name}</p>
+                        <p>Role: ${loginData.user.role}</p>
+                        <p>Token: ${loginData.token ? 'Received' : 'Not received'}</p>
+                    `;
+                } else {
+                    loginTest.className = 'test-result error';
+                    loginTest.innerHTML = `
+                        <h3>❌ Login API Test</h3>
+                        <p>Status: Failed</p>
+                        <p>Error: ${loginData.message || 'Unknown error'}</p>
+                    `;
+                }
+            } catch (error) {
+                loginTest.className = 'test-result error';
+                loginTest.innerHTML = `
+                    <h3>❌ Login API Test</h3>
+                    <p>Status: Failed</p>
+                    <p>Error: ${error.message}</p>
+                `;
+            }
+            
+            // Overall result
+            const overallTest = document.createElement('div');
+            const coursesSuccess = coursesTest.className.includes('success');
+            const loginSuccess = loginTest.className.includes('success');
+            
+            if (coursesSuccess && loginSuccess) {
+                overallTest.className = 'test-result success';
+                overallTest.innerHTML = `
+                    <h3>🎉 Integration Successful!</h3>
+                    <p>Frontend and Backend are successfully connected and communicating.</p>
+                `;
+            } else {
+                overallTest.className = 'test-result error';
+                overallTest.innerHTML = `
+                    <h3>⚠️ Integration Issues</h3>
+                    <p>There are issues with the frontend-backend connection.</p>
+                    <p>Please check that both servers are running:</p>
+                    <ul>
+                        <li>Backend: http://localhost:5000</li>
+                        <li>Frontend: http://localhost:3000</li>
+                    </ul>
+                `;
+            }
+            
+            resultsDiv.appendChild(overallTest);
+        }
+        
+        // Run tests automatically when page loads
+        window.addEventListener('load', runTests);
+    </script>
+</body>
+</html>
